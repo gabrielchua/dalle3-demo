@@ -31,10 +31,9 @@ def generate_dalle3_prompt(prompt):
     """Enhance the given prompt using GPT-4. Return the enhanced prompt."""
     response = client.chat.completions.create(
         model="gpt-4-0125-preview",
-        messages=[{"role": "system", "content": "You are an art expert. Make the given image description much more detailed. Furnish additional details that would make the final image more aesthetically pleasing."},
+        messages=[{"role": "system", "content": "You are an art expert. You will receive an image description, and your task is to make it much more detailed. Furnish additional details that would make the final image more aesthetically pleasing. Your description should be around 100 words."},
                     {"role": "user", "content": prompt}],
-        temperature=0.5,
-        max_tokens=len(prompt)*3
+        temperature=0.5
     )
 
     return response.choices[0].message.content
