@@ -73,7 +73,7 @@ size = st.radio("Size", ["Square", "Landscape", "Portrait"],
 style = st.radio("Style", ["Natural", "Vivid"],
                  horizontal=True,
                  help="Vivid photos will be less realistic")
-prompt_enhancment = st.checkbox("Enable prompt enhancement",
+prompt_enhancment = st.checkbox("Prompt enhancement",
                                 help="This uses GPT-4 to enhance your prompt")
 
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
