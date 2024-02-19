@@ -4,7 +4,7 @@ app.py
 import streamlit as st
 from openai import OpenAI
 
-SIZE_MAPPING = {"Square": "1024x1024", "Landscape": "1792x1024", "Portrait": "1024x1792"}
+SIZE_MAPPING = {"Square": "1024x1024", "Landscape": "1792x1024"}
 
 ########################################################
 def moderation_check(text):
@@ -67,7 +67,7 @@ st.info("""
 original_prompt = st.text_input("Describe your picture",
                                 max_chars=4000,
                                 help="Be as descriptive as possible.")
-size = st.radio("Size", ["Square", "Landscape", "Portrait"],
+size = st.radio("Size", ["Square", "Landscape"],
                 horizontal=True,
                 help="The aspect ratio for the image.")
 style = st.radio("Style", ["Natural", "Vivid"],
@@ -79,8 +79,6 @@ prompt_enhancment = st.checkbox("Prompt enhancement",
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 if st.button("Generate Image"):
-    original_prompt = original_prompt + f". The aspect ratio for the image will be in {size} style."
-
     size = SIZE_MAPPING[size]
 
     if len(original_prompt) == 0:
