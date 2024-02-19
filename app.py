@@ -29,7 +29,7 @@ with st.expander("About this app"):
     
 original_prompt = st.text_area("Describe your picture",
                                 max_chars=4000,
-                                value=
+                                value="A cartoon hamster lifting weights in the gym",
                                 help="Be as descriptive as possible.")
 size = st.radio("Size", ["Square", "Landscape"],
                 horizontal=True,
