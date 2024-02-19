@@ -59,7 +59,7 @@ st.title("Try DALL·E 3 🎨")
 st.info("""
 **About:** This app is a personal project, not affliated with OpenAI.
         
-**Is this really free?** I have some OpenAI API credits expiring on 1 March 2024. 
+**Is this really free?** I have some OpenAI API credits expiring on 1 March 2024. So... yes :)
 
 **Contact:** [X](https://www.x.com/gabchuayz) or [LinkedIn](https://www.linkedin.com/in/gabriel-chua)
 """)
