@@ -57,11 +57,11 @@ st.set_page_config(page_title="Try DALL·E 3 🎨",
 
 st.title("Try DALL·E 3 🎨")
 st.info("""
-**About** This app is a personal project, not affliated with OpenAI.
+**About:** This app is a personal project, not affliated with OpenAI.
         
 **Is this really free?** I have some OpenAI API credits expiring on 1 March 2024. 
 
-**Contact**: [X](https://www.x.com/gabchuayz) or [LinkedIn](https://www.linkedin.com/in/gabriel-chua)
+**Contact:** [X](https://www.x.com/gabchuayz) or [LinkedIn](https://www.linkedin.com/in/gabriel-chua)
 """)
 
 original_prompt = st.text_input("Describe your picture",
