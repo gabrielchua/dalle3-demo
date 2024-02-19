@@ -38,6 +38,7 @@ style = st.radio("Style", ["Natural", "Vivid"],
                  horizontal=True,
                  help="Vivid photos will be less realistic")
 prompt_enhancment = st.checkbox("Prompt enhancement",
+                                value=True,
                                 help="This uses GPT-4 to enhance your prompt")
 
 if st.button("Generate Image"):
