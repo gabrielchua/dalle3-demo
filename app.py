@@ -14,20 +14,22 @@ from utils import (
 
 SIZE_MAPPING = {"Square": "1024x1024", "Landscape": "1792x1024"}
 
-st.set_page_config(page_title="Try DALL·E 3 🎨",
+st.set_page_config(page_title="DALL·E 3 🎨",
                    page_icon="🎨")
 
-st.title("Try DALL·E 3 🎨")
-st.info("""
-**About:** This app is a personal project, not affliated with OpenAI.
-        
-**Is this really free?** I have some OpenAI API credits expiring on 1 March 2024. So... yes :)
-
-**Contact:** [X](https://www.x.com/gabchuayz) or [LinkedIn](https://www.linkedin.com/in/gabriel-chua)
-""")
-
-original_prompt = st.text_input("Describe your picture",
+st.title("DALL·E 3 🎨")
+with st.expander("About this app"):
+    st.info("""
+    This is a personal project, not affliated with OpenAI.
+            
+    **Is this really free?** I have some OpenAI API credits expiring on 1 March 2024. So... yes :)
+    
+    **Contact:** [X](https://www.x.com/gabchuayz) or [LinkedIn](https://www.linkedin.com/in/gabriel-chua)
+    """)
+    
+original_prompt = st.text_area("Describe your picture",
                                 max_chars=4000,
+                                value=
                                 help="Be as descriptive as possible.")
 size = st.radio("Size", ["Square", "Landscape"],
                 horizontal=True,
