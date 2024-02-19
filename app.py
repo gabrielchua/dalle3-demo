@@ -14,7 +14,7 @@ from utils import (
 
 SIZE_MAPPING = {"Square": "1024x1024", "Landscape": "1792x1024"}
 
-st.set_page_config(page_title="DALL·E 3 🎨",
+st.set_page_config(page_title="Try OpenAI's DALL·E 3 🎨",
                    page_icon="🎨")
 
 st.title("DALL·E 3 🎨")
