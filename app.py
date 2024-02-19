@@ -4,53 +4,16 @@ app.py
 import streamlit as st
 from openai import OpenAI
 
+from utils import (
+    append_to_sheet,
+    generate_dalle3_image_url,
+    generate_dalle3_prompt,
+    moderation_check,
+    zero_shot_nsfw_classifier
+)
+
 SIZE_MAPPING = {"Square": "1024x1024", "Landscape": "1792x1024"}
 
-########################################################
-def moderation_check(text):
-    """Check if the given text is safe for work using openai's moderation endpoint."""
-    response = client.moderations.create(input=text)
-    return response.results[0].flagged
-
-def zero_shot_nsfw_classifier(text):
-    """Check if the given text is safe for work using gpt4 zero-shot classifer."""
-    response = client.chat.completions.create(
-        model="gpt-4-0125-preview",
-        messages=[{"role": "system", "content": "Is the given text NSFW? If yes, return `1`, else return `0`"},
-                  {"role": "user", "content": text}],
-        max_tokens=1,
-        temperature=0,
-        seed=0,
-        logit_bias={"15": 100,
-                    "16": 100}
-    )
-
-    return int(response.choices[0].message.content)
-
-def generate_dalle3_prompt(prompt):
-    """Enhance the given prompt using GPT-4. Return the enhanced prompt."""
-    response = client.chat.completions.create(
-        model="gpt-4-0125-preview",
-        messages=[{"role": "system", "content": "You are an art expert. You will receive an image description, and your task is to make it much more detailed. Furnish additional details that would make the final image more aesthetically pleasing. Your description should be around 100 words."},
-                    {"role": "user", "content": prompt}],
-        temperature=0.5
-    )
-
-    return response.choices[0].message.content
-
-def generate_dalle3_image_url(prompt, size, style):
-    """Generate an image using DALL·E 3 and return the URL."""
-    img_response = client.images.generate(
-        model="dall-e-3",
-        prompt=prompt,
-        style=style.lower(),
-        n=1,
-        size=size
-    )
-
-    return img_response.data[0].url
-  
-########################################################
 st.set_page_config(page_title="Try DALL·E 3 🎨",
                    page_icon="🎨")
 
@@ -75,17 +38,17 @@ style = st.radio("Style", ["Natural", "Vivid"],
 prompt_enhancment = st.checkbox("Prompt enhancement",
                                 help="This uses GPT-4 to enhance your prompt")
 
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
-
 if st.button("Generate Image"):
     size = SIZE_MAPPING[size]
 
     if len(original_prompt) == 0:
         st.warning("Please enter a prompt.", icon="🚫")
+        append_to_sheet(original_prompt, False)
         st.stop()
 
     if (moderation_check(original_prompt)) or (zero_shot_nsfw_classifier(original_prompt) == 1):
         st.warning("This prompt has been flagged as NSFW. Please revise it.", icon="🚫")
+        append_to_sheet(original_prompt, False)
         st.stop()
 
     if prompt_enhancment:
@@ -99,5 +62,7 @@ if st.button("Generate Image"):
     
     with st.spinner("Generating your image 🎨 - this can take about 30 seconds..."):
         img_url = generate_dalle3_image_url(prompt_dalle3, size, style)
+        append_to_sheet(prompt_dalle3, True)
+
     st.markdown(f'<img src="{img_url}" alt="Generated Image" width="500"> <br>', unsafe_allow_html=True)
     st.success(f"**Prompt:** {prompt_dalle3}")
